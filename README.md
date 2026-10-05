@@ -2,20 +2,20 @@
 
 ## 1. Mục tiêu
 
-* Khởi tạo cặp khóa SSH sử dụng thuật toán Ed25519.
+* Tạo cặp khóa SSH sử dụng thuật toán Ed25519.
 * Cấu hình xác thực SSH với GitHub.
-* Liên kết repository cục bộ với repository trên GitHub bằng giao thức SSH.
+* Liên kết repository cục bộ với repository GitHub bằng giao thức SSH.
 * Đẩy mã nguồn và lịch sử commit lên GitHub.
 
 ## 2. Tạo SSH Key Ed25519
 
-Sử dụng Git Bash trên Windows và thực hiện lệnh:
+Sử dụng Git Bash để tạo cặp khóa SSH bằng thuật toán Ed25519:
 
 ```bash
 ssh-keygen -t ed25519 -C "260806tan@gmail.com"
 ```
 
-Khóa được tạo tại:
+Khóa được lưu tại:
 
 ```text
 ~/.ssh/id_ed25519
@@ -24,10 +24,10 @@ Khóa được tạo tại:
 
 Trong đó:
 
-* `id_ed25519` là Private Key, không được chia sẻ hoặc đưa lên GitHub.
-* `id_ed25519.pub` là Public Key, được sử dụng để xác thực với GitHub.
+* `id_ed25519`: Private Key, không được chia sẻ hoặc đưa lên GitHub.
+* `id_ed25519.pub`: Public Key, được sử dụng để xác thực với GitHub.
 
-Public Key được kiểm tra bằng lệnh:
+Kiểm tra Public Key bằng lệnh:
 
 ```bash
 cat ~/.ssh/id_ed25519.pub
@@ -35,7 +35,7 @@ cat ~/.ssh/id_ed25519.pub
 
 Sau đó Public Key được thêm vào GitHub tại:
 
-**GitHub → Settings → SSH and GPG keys → New SSH key**
+**Settings → SSH and GPG keys → New SSH key**
 
 ## 3. Kiểm tra kết nối SSH với GitHub
 
@@ -51,7 +51,7 @@ Kết quả:
 Hi ninhpoh! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-Kết quả trên xác nhận máy tính đã xác thực thành công với tài khoản GitHub `ninhpoh` thông qua giao thức SSH.
+Kết quả trên xác nhận máy tính đã xác thực thành công với tài khoản GitHub `ninhpoh` thông qua SSH.
 
 ## 4. Khởi tạo Git Repository cục bộ
 
@@ -67,56 +67,25 @@ Khởi tạo Git Repository:
 git init
 ```
 
-Kết quả:
+Repository cục bộ được tạo tại:
 
 ```text
-Initialized empty Git repository in C:/Users/PC/Desktop/it-209/ss04/bt03/.git/
+C:/Users/PC/Desktop/it-209/ss04/bt03/.git/
 ```
 
-## 5. Commit mã nguồn
+## 5. Thêm và Commit README.md
 
-Thêm các file vào Git:
+Thêm file README vào Git:
 
 ```bash
-git add .
+git add README.md
 ```
 
 Tạo commit:
 
 ```bash
-git commit -m "Complete exercise 3"
+git commit -m "Add README for exercise 3"
 ```
-
-## 6. Liên kết Remote Repository bằng SSH
-
-Repository GitHub được liên kết bằng giao thức SSH với định dạng:
-
-```text
-git@github.com:username/repository.git
-```
-
-Thêm remote:
-
-```bash
-git remote add origin git@github.com:ninhpoh/REPOSITORY_NAME.git
-```
-
-Kiểm tra remote:
-
-```bash
-git remote -v
-```
-
-Kết quả mong đợi:
-
-```text
-origin  git@github.com:ninhpoh/REPOSITORY_NAME.git (fetch)
-origin  git@github.com:ninhpoh/REPOSITORY_NAME.git (push)
-```
-
-Remote sử dụng giao thức **SSH**, không sử dụng HTTPS.
-
-## 7. Đẩy dự án lên GitHub
 
 Đổi tên branch chính thành `main`:
 
@@ -124,35 +93,74 @@ Remote sử dụng giao thức **SSH**, không sử dụng HTTPS.
 git branch -M main
 ```
 
-Đẩy mã nguồn lên GitHub:
+## 6. Liên kết Remote Repository bằng SSH
+
+Repository GitHub được sử dụng:
+
+**IT209-SS04-BT03**
+
+Thêm remote bằng giao thức SSH:
+
+```bash
+git remote add origin git@github.com:ninhpoh/IT209-SS04-BT03.git
+```
+
+Kiểm tra cấu hình remote:
+
+```bash
+git remote -v
+```
+
+Kết quả:
+
+```text
+origin  git@github.com:ninhpoh/IT209-SS04-BT03.git (fetch)
+origin  git@github.com:ninhpoh/IT209-SS04-BT03.git (push)
+```
+
+Remote sử dụng giao thức **SSH**, không sử dụng HTTPS.
+
+## 7. Đẩy dự án lên GitHub
+
+Sử dụng lệnh:
 
 ```bash
 git push -u origin main
 ```
 
-Sau khi push thành công, mã nguồn và lịch sử commit đã được lưu trữ trên GitHub.
+Sau khi push thành công, mã nguồn và lịch sử commit được lưu trữ trên repository GitHub.
 
-## 8. Repository GitHub
+## 8. Thông tin Repository
 
-**Tài khoản GitHub:** `ninhpoh`
-
-**URL Repository:**
+**GitHub Username:**
 
 ```text
-https://github.com/ninhpoh/REPOSITORY_NAME
+ninhpoh
+```
+
+**Repository:**
+
+```text
+IT209-SS04-BT03
+```
+
+**GitHub URL:**
+
+```text
+https://github.com/ninhpoh/IT209-SS04-BT03
 ```
 
 **SSH Remote URL:**
 
 ```text
-git@github.com:ninhpoh/REPOSITORY_NAME.git
+git@github.com:ninhpoh/IT209-SS04-BT03.git
 ```
-
-> Thay `REPOSITORY_NAME` bằng tên repository GitHub thực tế.
 
 ## 9. Kết quả kiểm tra
 
 ### Kiểm tra SSH
+
+Lệnh:
 
 ```bash
 ssh -T git@github.com
@@ -164,32 +172,44 @@ Kết quả:
 Hi ninhpoh! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
+→ Xác thực SSH với GitHub thành công.
+
 ### Kiểm tra Remote
+
+Lệnh:
 
 ```bash
 git remote -v
 ```
 
-Remote có dạng:
+Remote:
 
 ```text
-git@github.com:ninhpoh/REPOSITORY_NAME.git
+origin  git@github.com:ninhpoh/IT209-SS04-BT03.git (fetch)
+origin  git@github.com:ninhpoh/IT209-SS04-BT03.git (push)
 ```
 
-### Kết luận
+→ Repository local đã được liên kết với GitHub bằng giao thức SSH.
 
-Đã hoàn thành cấu hình xác thực SSH bằng thuật toán **Ed25519**, liên kết repository cục bộ với GitHub bằng giao thức **SSH** và đẩy dự án lên repository GitHub thành công.
+## 10. Kết luận
 
-## 10. Lưu ý bảo mật
+Đã hoàn thành cấu hình xác thực SSH bằng thuật toán **Ed25519**, xác thực thành công với tài khoản GitHub `ninhpoh`, liên kết repository local với GitHub bằng giao thức **SSH** và đẩy dự án lên repository:
 
-Không đưa Private Key lên GitHub:
+```text
+https://github.com/ninhpoh/IT209-SS04-BT03
+```
+
+## 11. Lưu ý bảo mật
+
+Không chia sẻ hoặc upload Private Key:
 
 ```text
 ~/.ssh/id_ed25519
 ```
 
-Chỉ Public Key được sử dụng để cấu hình xác thực:
+Chỉ Public Key được sử dụng để cấu hình xác thực với GitHub:
 
 ```text
 ~/.ssh/id_ed25519.pub
 ```
+
